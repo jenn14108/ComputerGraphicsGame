@@ -50,6 +50,60 @@ var scene, renderer;  // all threejs programs need these
 			createMainScene();
 	}
 
+
+
+	function createMainScene(){
+      // setup lighting
+			var light1 = createPointLight();
+			light1.position.set(0,200,20);
+			scene.add(light1);
+			var light0 = new THREE.AmbientLight( 0xffffff,0.25);
+			scene.add(light0);
+
+			// create main camera
+			camera = new THREE.PerspectiveCamera( 90, window.innerWidth / window.innerHeight, 0.1, 1000 );
+			camera.position.set(0,50,0);
+			camera.lookAt(0,0,0);
+
+			// create the ground and the skybox
+			var ground = createGround('grass.png');
+			scene.add(ground);
+			var skybox = createSkyBox('sky.jpg',1);
+			scene.add(skybox);
+
+			// create the avatar
+			avatarCam = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 1000 );
+			//avatar = createAvatar();
+			//avatar.translateY(20);
+			avatarCam.translateY(-4);
+			avatarCam.translateZ(3);
+			//scene.add(avatar);
+			gameState.camera = avatarCam;
+
+      edgeCam = new THREE.PerspectiveCamera( 120, window.innerWidth / window.innerHeight, 0.1, 1000 );
+      edgeCam.position.set(20,20,10);
+
+			addBalls();
+
+			cone = createConeMesh(4,6);
+			cone.position.set(10,3,7);
+			scene.add(cone);
+
+			npc = createBoxMesh(0x0000ff);
+			npc.position.set(30,5,-30);
+			npc.scale.set(1,2,4);
+			scene.add(npc);
+			console.dir(npc);
+
+			gudetama = createGudetama();
+			gudetama.position.set(15,5,10);
+			scene.add(gudetama);
+
+			initSuzanne();
+			initSuzanneOBJ();
+
+	}
+
 	function initSuzanne(){
 		var loader = new THREE.JSONLoader();
 		loader.load("../models/suzanne.json",
@@ -103,61 +157,6 @@ var scene, renderer;  // all threejs programs need these
 						console.log("error in loading: "+err);}
 				)
 	}
-
-
-	function createMainScene(){
-      // setup lighting
-			var light1 = createPointLight();
-			light1.position.set(0,200,20);
-			scene.add(light1);
-			var light0 = new THREE.AmbientLight( 0xffffff,0.25);
-			scene.add(light0);
-
-			// create main camera
-			camera = new THREE.PerspectiveCamera( 90, window.innerWidth / window.innerHeight, 0.1, 1000 );
-			camera.position.set(0,50,0);
-			camera.lookAt(0,0,0);
-
-			// create the ground and the skybox
-			var ground = createGround('grass.png');
-			scene.add(ground);
-			var skybox = createSkyBox('sky.jpg',1);
-			scene.add(skybox);
-
-			// create the avatar
-			avatarCam = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 1000 );
-			//avatar = createAvatar();
-			//avatar.translateY(20);
-			avatarCam.translateY(-4);
-			avatarCam.translateZ(3);
-			//scene.add(avatar);
-			gameState.camera = avatarCam;
-
-      edgeCam = new THREE.PerspectiveCamera( 120, window.innerWidth / window.innerHeight, 0.1, 1000 );
-      edgeCam.position.set(20,20,10);
-
-			addBalls();
-
-			cone = createConeMesh(4,6);
-			cone.position.set(10,3,7);
-			scene.add(cone);
-
-			npc = createBoxMesh(0x0000ff);
-			npc.position.set(30,5,-30);
-			npc.scale.set(1,2,4);
-			scene.add(npc);
-			console.dir(npc);
-
-			gudetama = createGudetama();
-			gudetama.position.set(15,5,10);
-			scene.add(gudetama);
-
-
-			initSuzanne();
-			initSuzanneOBJ();
-
-	}
-
 
 	function randN(n){
 		return Math.random()*n;
@@ -249,11 +248,7 @@ var scene, renderer;  // all threejs programs need these
     Physijs.scripts.worker = '/js/physijs_worker.js';
     Physijs.scripts.ammo = '/js/ammo.js';
   }
-	/*
-		The renderer needs a size and the actual canvas we draw on
-		needs to be added to the body of the webpage. We also specify
-		that the renderer will be computing soft shadows
-	*/
+
 	function initRenderer(){
 		renderer = new THREE.WebGLRenderer();
 		renderer.setSize( window.innerWidth, window.innerHeight-50 );
@@ -276,7 +271,6 @@ var scene, renderer;  // all threejs programs need these
 	}
 
 
-
 	function createBoxMesh(color){
 		var geometry = new THREE.BoxGeometry( 1, 1, 1);
 		var material = new THREE.MeshLambertMaterial( { color: color} );
@@ -294,7 +288,6 @@ var scene, renderer;  // all threejs programs need these
 		mesh.castShadow = true;
 		return mesh;
 	}
-
 
 
 	function createGround(image){
@@ -329,10 +322,7 @@ var scene, renderer;  // all threejs programs need these
 		//var pmaterial = new Physijs.createMaterial(material,0.9,0.5);
 		//var mesh = new THREE.Mesh( geometry, material );
 		var mesh = new THREE.Mesh( geometry, material, 0 );
-
 		mesh.receiveShadow = false;
-
-
 		return mesh
 		// we need to rotate the mesh 90 degrees to make it horizontal not vertical
 
@@ -347,7 +337,7 @@ var scene, renderer;  // all threejs programs need these
 		var mesh = new Physijs.SphereMesh(geometry, pmaterial);
 		mesh.setDamping(0.1,0.1);
 		mesh.castShadow = true;
-		return mesh; 
+		return mesh;
 	}
 
 
@@ -368,8 +358,6 @@ var scene, renderer;  // all threejs programs need these
 		var scoop1 = createBoxMesh2(0xff0000,10,1,0.1); //the red object we see when running the program, added to original avatar
 		scoop1.position.set(0,-2,5);
 		mesh.add(scoop1);
-		//mesh.add(scoop2);
-
 		return mesh;
 	}
 
@@ -398,12 +386,6 @@ var scene, renderer;  // all threejs programs need these
 		mesh.castShadow = true;
 		return mesh;
 	}
-
-
-
-
-
-	var clock;
 
 	function initControls(){
 		// here is where we create the eventListeners to respond to operations
@@ -442,7 +424,6 @@ var scene, renderer;  // all threejs programs need these
           break;
       case "h": controls.reset = true; break;
 
-
 			// switch cameras
 			case "1": gameState.camera = camera; break;
 			case "2": gameState.camera = avatarCam; break;
@@ -461,8 +442,6 @@ var scene, renderer;  // all threejs programs need these
 	}
 
 	function keyup(event){
-		//console.log("Keydown:"+event.key);
-		//console.dir(event);
 		switch (event.key){
 			case "w": controls.fwd   = false;  break;
 			case "s": controls.bwd   = false; break;
@@ -514,8 +493,6 @@ var scene, renderer;  // all threejs programs need these
 
 	}
 
-
-
 	function animate() {
 
 		requestAnimationFrame( animate );
@@ -542,8 +519,6 @@ var scene, renderer;  // all threejs programs need these
 
 		}
 
-		//draw heads up display ..
-		//the Score: and Health: 10 on the bottom left corner
 	  var info = document.getElementById("info");
 		info.innerHTML='<div style="font-size:24pt">Score: '
 		+ gameState.score
@@ -551,6 +526,3 @@ var scene, renderer;  // all threejs programs need these
 		+ '</div>';
 
 	}
-
-
-
