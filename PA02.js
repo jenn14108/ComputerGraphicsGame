@@ -6,7 +6,7 @@ var scene, renderer;  // all threejs programs need these
 	var cone;
 	var npc;
 
-	var endScene, endCamera, endText;
+	var startScene, endScene, endCamera, endText;
 
 	var controls =
 	     {fwd:false, bwd:false, left:false, right:false,
@@ -14,7 +14,7 @@ var scene, renderer;  // all threejs programs need these
 		    camera:camera}
 
 	var gameState =
-	     {score:0, health:10, scene:'main', camera:'none' }
+	     {score:0, health:10, scene:'startgame', camera:'none' }
 
 
 	// Here is the main game control
@@ -39,12 +39,26 @@ var scene, renderer;  // all threejs programs need these
 
 	}
 
+	function createStartScene(){
+		startScene = initScene();
+		startText = createSkyBox('startgame.png', 10);
+		startScene.add(startText);
+		var light2 = createPointLight();
+		light2.position.set(0,200,20);
+		startScene.add(light2);
+		startCamera = new THREE.PerspectiveCamera( 90, window.innerWidth / window.innerHeight, 0.1, 1000 );
+		startCamera.position.set(0,50,1);
+		startCamera.lookAt(0,0,0);
+
+	}
+
 	/**
 	  To initialize the scene, we initialize each of its components
 	*/
 	function init(){
       initPhysijs();
 			scene = initScene();
+			createStartScene();
 			createEndScene();
 			initRenderer();
 			createMainScene();
@@ -420,6 +434,13 @@ var scene, renderer;  // all threejs programs need these
 		console.log("Keydown: '"+event.key+"'");
 		//console.dir(event);
 		// first we handle the "play again" key in the "youwon" scene
+
+		if (gameState.scene == 'startgame' && event.key == 'p'){
+			gameState.scene = 'main';
+			addBalls();
+			return;
+		}
+
 		if (gameState.scene == 'youwon' && event.key=='r') {
 			gameState.scene = 'main';
 			gameState.score = 0;
@@ -456,6 +477,8 @@ var scene, renderer;  // all threejs programs need these
 			case "q": avatarCam.translateX(-1);break;
 			case "e": avatarCam.translateX(1);break;
 
+			case "p": gameState.scene == 'main'; 
+
 		}
 
 	}
@@ -480,6 +503,16 @@ var scene, renderer;  // all threejs programs need these
 		npc.lookAt(suzanne.position);
 	  npc.__dirtyPosition = true;
 		npc.setLinearVelocity(npc.getWorldDirection().multiplyScalar(0.5));
+	}
+
+	function updateGudetama(){
+		gudetama.lookAt(suzanne.position);
+		gudetama.__dirtyPosition = true; 
+
+		var a = new THREE.Vector3(0,1,0);
+		a = gudetama.lookAt(suzanne.position).transform.position - gudetama.transform.position;
+		gudetama.rigidbody.AddForce(100 * a);
+
 	}
 
   function updateAvatar(){
@@ -519,6 +552,8 @@ var scene, renderer;  // all threejs programs need these
 	function animate() {
 
 		requestAnimationFrame( animate );
+
+
 
 		switch(gameState.scene) {
 
