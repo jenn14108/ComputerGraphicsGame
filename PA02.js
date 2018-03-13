@@ -6,7 +6,7 @@ var scene, renderer;  // all threejs programs need these
 	var cone;
 	var npc;
 
-	var startScene, endScene, endCamera, endText;
+	var startScene, endScene, endCamera, endText, startText, startCamera;
 
 	var controls =
 	     {fwd:false, bwd:false, left:false, right:false,
@@ -550,7 +550,7 @@ var scene, renderer;  // all threejs programs need these
 				break;
 
 			default:
-			  console.log("don't know the scene "+gameState.scene);
+			 console.log("don't know the scene "+gameState.scene);
 
 		}
 
