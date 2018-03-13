@@ -110,8 +110,11 @@ var scene, renderer;  // all threejs programs need these
 			console.dir(npc);
 
 			gudetama = createGudetama();
-			gudetama.position.set(15,2,10);
+			//gudetama.position.set(15,2,10);
 			gudetama.scale.set(0.4,0.4,0.4);
+			gudetama.position.x = 15;
+			gudetama.position.y = 2;
+			gudetama.position.z = 10;
 			scene.add(gudetama);
 
 			initSuzanne();
@@ -537,6 +540,7 @@ var scene, renderer;  // all threejs programs need these
 		switch(gameState.scene) {
 
 			case "startgame":
+				startText.rotateY(0.005);
 				renderer.render(startScene,startCamera);
 				break;
 
