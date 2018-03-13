@@ -49,7 +49,7 @@ var scene, renderer;  // all threejs programs need these
 		startCamera = new THREE.PerspectiveCamera( 90, window.innerWidth / window.innerHeight, 0.1, 1000 );
 		startCamera.position.set(0,50,1);
 		startCamera.lookAt(0,0,0);
-
+		gameState.scene='startgame';
 	}
 
 	/**
@@ -458,7 +458,7 @@ var scene, renderer;  // all threejs programs need these
 			case "q": avatarCam.translateX(-1);break;
 			case "e": avatarCam.translateX(1);break;
 
-			case "p": gameState.scene == 'main'; 
+			case "p": gameState.scene == 'main';
 
 		}
 
@@ -486,7 +486,7 @@ var scene, renderer;  // all threejs programs need these
 
 	function updateGudetama(){
 		gudetama.lookAt(suzanne.position);
-		gudetama.__dirtyPosition = true; 
+		gudetama.__dirtyPosition = true;
 
 		var a = new THREE.Vector3(0,1,0);
 		a = gudetama.lookAt(suzanne.position).transform.position - gudetama.transform.position;
