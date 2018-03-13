@@ -110,7 +110,8 @@ var scene, renderer;  // all threejs programs need these
 			console.dir(npc);
 
 			gudetama = createGudetama();
-			gudetama.position.set(15,5,10);
+			gudetama.position.set(15,2,10);
+			gudetama.scale.set(0.4,0.4,0.4);
 			scene.add(gudetama);
 
 			initSuzanne();
@@ -186,6 +187,7 @@ var scene, renderer;  // all threejs programs need these
 		for(i=0;i<numBalls;i++){
 			var ball = createBall();
 			ball.position.set(randN(20)+15,30,randN(20)+15);
+			ball.scale.set(0.4,0.4,0.4);
 			scene.add(ball);
 
 			ball.addEventListener( 'collision',
@@ -344,7 +346,7 @@ var scene, renderer;  // all threejs programs need these
 	}
 
 	function createGudetama() {
-		var geometry = new THREE.SphereGeometry(3, 19,19);
+		var geometry = new THREE.SphereGeometry(3,19,19);
 		var texture = new THREE.TextureLoader().load('gudetama.png');
 		var material = new THREE.MeshLambertMaterial( {map: texture});
 		var pmaterial = new Physijs.createMaterial(material, 0.9, 0.5);
