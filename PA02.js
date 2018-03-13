@@ -534,6 +534,10 @@ var scene, renderer;  // all threejs programs need these
 
 		switch(gameState.scene) {
 
+			case "startgame":
+				renderer.render(startScene,startCamera);
+				break;
+
 			case "youwon":
 				endText.rotateY(0.005);
 				renderer.render( endScene, endCamera );
