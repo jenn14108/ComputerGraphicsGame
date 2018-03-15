@@ -1,4 +1,4 @@
-var scene, renderer;  // all threejs programs need these
+  var scene, renderer;  // all threejs programs need these
 	var camera, avatarCam, edgeCam;  // we have two cameras in the main scene
 	var avatar, suzanne , gudetama;
 	// here are some mesh objects ...
@@ -22,6 +22,7 @@ var scene, renderer;  // all threejs programs need these
 	initControls();
 	animate();  // start the animation loop!
 
+<<<<<<< Updated upstream
 
 	function createLoseScene() {
 		loseScene = initScene();
@@ -36,6 +37,8 @@ var scene, renderer;  // all threejs programs need these
 	}
 
 
+=======
+>>>>>>> Stashed changes
 	function createEndScene(){
 		endScene = initScene();
 		endText = createSkyBox('youwon.png',10);
