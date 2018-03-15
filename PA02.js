@@ -193,11 +193,23 @@
 		// gudetama.position.x = 15;
 		// gudetama.position.y = 2;
 		// gudetama.position.z = 10;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1e17ba52b41267495ba66086b865eb978f0081d3
 
 		gudetama.position.set(randN(20)+15,30,randN(20)+15);
 		gudetama.position.set(-40,40,-40);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1e17ba52b41267495ba66086b865eb978f0081d3
 		gudetama.position.set(randN(20)+15,30,randN(20)+15);
 		gudetama.position.set(-40,40,-40);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1e17ba52b41267495ba66086b865eb978f0081d3
 		scene.add(gudetama);
 
 		gudetama.addEventListener('collision',
