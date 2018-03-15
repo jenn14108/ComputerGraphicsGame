@@ -193,8 +193,12 @@
 		// gudetama.position.x = 15;
 		// gudetama.position.y = 2;
 		// gudetama.position.z = 10;
+<<<<<<< HEAD
 		gudetama.position.set(randN(20)+15,30,randN(20)+15);
 
+=======
+		gudetama.position.set(-40,40,-40);
+>>>>>>> origin/master
 		scene.add(gudetama);
 
 		gudetama.addEventListener('collision',
@@ -386,25 +390,26 @@
 		return mesh;
 }
 
-	function createAvatar(){
-		//var geometry = new THREE.SphereGeometry( 4, 20, 20);
-		var geometry = new THREE.BoxGeometry( 5, 5, 6);
-		var material = new THREE.MeshLambertMaterial( { color: 0xffff00} );
-		var pmaterial = new Physijs.createMaterial(material,0.9,0.5);
-		//var mesh = new THREE.Mesh( geometry, material );
-		var mesh = new Physijs.BoxMesh( geometry, pmaterial );
-		mesh.setDamping(0.1,0.1);
-		mesh.castShadow = true;
 
-		avatarCam.position.set(0,4,0);
-		avatarCam.lookAt(0,4,10);
-		mesh.add(avatarCam);
+	// function createAvatar(){
+	// 	//var geometry = new THREE.SphereGeometry( 4, 20, 20);
+	// 	var geometry = new THREE.BoxGeometry( 5, 5, 6);
+	// 	var material = new THREE.MeshLambertMaterial( { color: 0xffff00} );
+	// 	var pmaterial = new Physijs.createMaterial(material,0.9,0.5);
+	// 	//var mesh = new THREE.Mesh( geometry, material );
+	// 	var mesh = new Physijs.BoxMesh( geometry, pmaterial );
+	// 	mesh.setDamping(0.1,0.1);
+	// 	mesh.castShadow = true;
 
-		var scoop1 = createBoxMesh2(0xff0000,10,1,0.1); //the red object we see when running the program, added to original avatar
-		scoop1.position.set(0,-2,5);
-		mesh.add(scoop1);
-		return mesh;
-	}
+	// 	avatarCam.position.set(0,4,0);
+	// 	avatarCam.lookAt(0,4,10);
+	// 	mesh.add(avatarCam);
+
+	// 	var scoop1 = createBoxMesh2(0xff0000,10,1,0.1); //the red object we see when running the program, added to original avatar
+	// 	scoop1.position.set(0,-2,5);
+	// 	mesh.add(scoop1);
+	// 	return mesh;
+	// }
 
 
 	function createConeMesh(r,h){
@@ -550,9 +555,8 @@
 
     if (controls.reset){
       suzanne.__dirtyPosition = true;
-      suzanne.position.set(40,10,40);
+      suzanne.position.set(10,10,10);
     }
-
 	}
 
 	function animate() {
