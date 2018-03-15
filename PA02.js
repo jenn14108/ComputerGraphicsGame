@@ -193,17 +193,11 @@
 		// gudetama.position.x = 15;
 		// gudetama.position.y = 2;
 		// gudetama.position.z = 10;
-<<<<<<< HEAD
 
 		gudetama.position.set(randN(20)+15,30,randN(20)+15);
-
 		gudetama.position.set(-40,40,-40);
-
-=======
 		gudetama.position.set(randN(20)+15,30,randN(20)+15);
-
 		gudetama.position.set(-40,40,-40);
->>>>>>> origin/master
 		scene.add(gudetama);
 
 		gudetama.addEventListener('collision',
@@ -215,16 +209,12 @@
 							gameState.scene = 'youlose';
 						}
 
-						//this.position.y = this.position.y - 100;
+						this.position.y = this.position.y - 100;
 						this.__dirtyPosition = true;
 				}
 			}
 		)
 	}
-
-
-
-
 
 	function addBalls(){
 		var numBalls = 20;
@@ -468,6 +458,14 @@
 			return;
 		}
 
+		if (gameState.scene == 'youlose' && event.key=='r'){
+			gameState.scene = 'main';
+			gameState.score = 0;
+			addBalls();
+			addGudetama();
+			return;
+		}
+
 		// this is the regular scene
 		switch (event.key){
 			// change the way the avatar is moving
@@ -576,6 +574,11 @@
 			case "youwon":
 				endText.rotateY(0.005);
 				renderer.render( endScene, endCamera );
+				break;
+
+			case "youlose":
+				loseText.rotateY(0.005);
+				renderer.render(loseScene, loseCamera);
 				break;
 
 			case "main":
