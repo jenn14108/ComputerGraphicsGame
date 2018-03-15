@@ -22,7 +22,6 @@
 	initControls();
 	animate();  // start the animation loop!
 
-<<<<<<< Updated upstream
 
 	function createLoseScene() {
 		loseScene = initScene();
@@ -37,8 +36,6 @@
 	}
 
 
-=======
->>>>>>> Stashed changes
 	function createEndScene(){
 		endScene = initScene();
 		endText = createSkyBox('youwon.png',10);
@@ -190,8 +187,6 @@
 	}
 
 
-<<<<<<< HEAD
-
 	function addGudetama(){
 		gudetama = createGudetama();
 		gudetama.scale.set(0.4,0.4,0.4);
@@ -201,7 +196,7 @@
 		gudetama.position.set(randN(20)+15,30,randN(20)+15);
 		scene.add(gudetama);
 
-		gudetama.addEventListener('collision', 
+		gudetama.addEventListener('collision',
 			function (other_object, relative_velocity, relative_rotation, contact_normal){
 				if (other_object == suzanne){
 						gameState.health -= 1;
@@ -219,8 +214,7 @@
 
 
 
-=======
->>>>>>> d737f868c76061171a89021d0f68ddb71b258713
+
 	function addBalls(){
 		var numBalls = 20;
 
