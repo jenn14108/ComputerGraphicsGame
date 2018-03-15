@@ -200,6 +200,7 @@
 			function (other_object, relative_velocity, relative_rotation, contact_normal){
 				if (other_object == suzanne){
 						gameState.health -= 1;
+						gudetama.position.set(randN(20)+15,30,randN(20)+15);
 						if (gameState.health == 0){
 							gameState.scene = 'youlose';
 						}
