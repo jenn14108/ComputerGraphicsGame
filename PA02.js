@@ -181,8 +181,6 @@ var scene, renderer;  // all threejs programs need these
 	}
 
 
-
-
 	function addBalls(){
 		var numBalls = 20;
 
@@ -329,7 +327,6 @@ var scene, renderer;  // all threejs programs need these
 	}
 
 
-
 	function createSkyBox(image,k){
 		// creating a textured plane which receives shadows
 		var geometry = new THREE.SphereGeometry( 80, 80, 80 );
@@ -345,7 +342,6 @@ var scene, renderer;  // all threejs programs need these
 		return mesh
 		// we need to rotate the mesh 90 degrees to make it horizontal not vertical
 
-
 	}
 
 	function createGudetama() {
@@ -358,7 +354,6 @@ var scene, renderer;  // all threejs programs need these
 		mesh.castShadow = true;
 		return mesh;
 	}
-
 
 	function createAvatar(){
 		//var geometry = new THREE.SphereGeometry( 4, 20, 20);
@@ -407,9 +402,6 @@ var scene, renderer;  // all threejs programs need these
 	}
 
 	function initControls(){
-		// here is where we create the eventListeners to respond to operations
-
-		  //create a clock for the time-based animation ...
 			clock = new THREE.Clock();
 			clock.start();
 
@@ -532,11 +524,7 @@ var scene, renderer;  // all threejs programs need these
 	}
 
 	function animate() {
-
 		requestAnimationFrame( animate );
-
-
-
 		switch(gameState.scene) {
 
 			case "startgame":
