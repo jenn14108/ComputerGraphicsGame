@@ -6,7 +6,7 @@ var scene, renderer;  // all threejs programs need these
 	var cone;
 	var npc;
 
-	var startScene, endScene, endCamera, endText, startText, startCamera;
+	var startScene, endScene, endCamera, endText, startText, startCamera, loseScene, loseCamera, loseText;
 
 	var controls =
 	     {fwd:false, bwd:false, left:false, right:false,
@@ -23,6 +23,17 @@ var scene, renderer;  // all threejs programs need these
 	animate();  // start the animation loop!
 
 
+	function createLoseScene() {
+		loseScene = initScene();
+		loseText = createSkyBox('youlose.png', 10);
+		loseScene.add(loseText);
+		var light3 = createPointLight();
+		light3.position.set(0,200,20);
+		loseScene.add(light3);
+		loseCamera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
+		loseCamera.position.set(0,50,1);
+		loseCamera.lookAt(0,0,0);
+	}
 
 
 	function createEndScene(){
@@ -60,6 +71,7 @@ var scene, renderer;  // all threejs programs need these
 			scene = initScene();
 			createStartScene();
 			createEndScene();
+			createLoseScene();
 			initRenderer();
 			createMainScene();
 	}
@@ -109,13 +121,7 @@ var scene, renderer;  // all threejs programs need these
 			scene.add(npc);
 			console.dir(npc);
 
-			gudetama = createGudetama();
-			//gudetama.position.set(15,2,10);
-			gudetama.scale.set(0.4,0.4,0.4);
-			gudetama.position.x = 15;
-			gudetama.position.y = 2;
-			gudetama.position.z = 10;
-			scene.add(gudetama);
+			addGudetama();
 
 			initSuzanne();
 			initSuzanneOBJ();
@@ -182,6 +188,32 @@ var scene, renderer;  // all threejs programs need these
 
 
 
+	function addGudetama(){
+		gudetama = createGudetama();
+		gudetama.scale.set(0.4,0.4,0.4);
+		// gudetama.position.x = 15;
+		// gudetama.position.y = 2;
+		// gudetama.position.z = 10;
+		gudetama.position.set(randN(20)+15,30,randN(20)+15);
+		scene.add(gudetama);
+
+		gudetama.addEventListener('collision', 
+			function (other_object, relative_velocity, relative_rotation, contact_normal){
+				if (other_object == suzanne){
+						gameState.health -= 1;
+						if (gameState.health == 0){
+							gameState.scene = 'youlose';
+						}
+
+						//this.position.y = this.position.y - 100;
+						this.__dirtyPosition = true;
+				}
+			}
+		)
+	}
+
+
+
 
 	function addBalls(){
 		var numBalls = 20;
@@ -204,20 +236,15 @@ var scene, renderer;  // all threejs programs need these
 						}
             //scene.remove(ball);  // this isn't working ...
 						// make the ball drop below the scene ..
-						// threejs doesn't let us remove it from the schene...
+			ll			// threejs doesn't let us remove it from the schene...
 						this.position.y = this.position.y - 100;
 						this.__dirtyPosition = true;
 					}
-					//ADDED THIS CLASS
-					else if (other_object == avatar){
-						gameState.health ++;
-					}
+
 				}
 			)
 		}
 	}
-
-
 
 	function playGameMusic(){
 		// create an AudioListener and add it to the camera
@@ -500,6 +527,7 @@ var scene, renderer;  // all threejs programs need these
 	}
 
   function updateAvatar(){
+
 		"change the avatar's linear or angular velocity based on controls state (set by WSAD key presses)"
 
 		var forward = suzanne.getWorldDirection();
