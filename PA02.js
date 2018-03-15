@@ -194,6 +194,7 @@
 		// gudetama.position.y = 2;
 		// gudetama.position.z = 10;
 		gudetama.position.set(randN(20)+15,30,randN(20)+15);
+
 		scene.add(gudetama);
 
 		gudetama.addEventListener('collision',
@@ -379,11 +380,11 @@
 		var texture = new THREE.TextureLoader().load('gudetama.png');
 		var material = new THREE.MeshLambertMaterial( {map: texture});
 		var pmaterial = new Physijs.createMaterial(material, 0.9, 0.5);
-		var mesh = new Physijs.SphereMesh(geometry, pmaterial);
+		var mesh = new Physijs.BoxMesh(geometry, pmaterial);
 		mesh.setDamping(0.1,0.1);
 		mesh.castShadow = true;
 		return mesh;
-	}
+}
 
 	function createAvatar(){
 		//var geometry = new THREE.SphereGeometry( 4, 20, 20);
