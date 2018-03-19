@@ -492,6 +492,10 @@
 			case "e": avatarCam.translateX(1);break;
 
 			case "p": gameState.scene == 'main';
+			//stands for upright. This is for resetting the position of suzanne so she is upright 
+			//when she falls over and faces some weird position 
+			case "u": suzanne.rotation.set(0,0,0); suzanne.__dirtyRotation=true;
+				console.dir(suzanne.rotation); break;
 
 		}
 
