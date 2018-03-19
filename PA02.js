@@ -190,15 +190,9 @@
 	function addGudetama(){
 		gudetama = createGudetama();
 		gudetama.scale.set(0.4,0.4,0.4);
-		// gudetama.position.x = 15;
-		// gudetama.position.y = 2;
-		// gudetama.position.z = 10;
 
 
-		gudetama.position.set(randN(20)+15,30,randN(20)+15);
-		gudetama.position.set(-40,40,-40);
-
-		gudetama.position.set(randN(20)+15,30,randN(20)+15);
+		//gudetama.position.set(randN(20)+15,30,randN(20)+15);
 		gudetama.position.set(-40,40,-40);
 
 		scene.add(gudetama);
@@ -212,7 +206,7 @@
 							gameState.scene = 'youlose';
 						}
 
-						this.position.y = this.position.y - 100;
+						//this.position.y = this.position.y - 100;
 						this.__dirtyPosition = true;
 				}
 			}
