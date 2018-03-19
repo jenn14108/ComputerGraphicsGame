@@ -1,6 +1,6 @@
   var scene, renderer;  // all threejs programs need these
 	var camera, avatarCam, edgeCam, juliaCam;  // we have two cameras in the main scene
-	var avatar, suzanne , gudetama;
+	var avatar, suzanne , gudetama, creeper;
 	// here are some mesh objects ...
 
 	var cone;
@@ -121,7 +121,19 @@
 			scene.add(npc);
 			console.dir(npc);
 
+      npc3 = createConeMesh(2,3);
+      			npc3.position.set(20,0,20);
+      			scene.add(npc3);
+      			npc3.addEventListener('collision',function (other_object, relative_velocity, relative_rotation, contact_normal){
+      				if (other_object == suzanne){
+      					npc3.position.y+=10;
+      					npc3.__dirtyPosition = true;
+      				}
+      			}
+      		)
+
 			addGudetama();
+      addCreeper();
 
 			initSuzanne();
 			initSuzanneOBJ();
@@ -212,6 +224,32 @@
 			}
 		)
 	}
+
+  function addCreeper(){
+    creeper = createCreeper();
+    creeper.scale.set(0.4,0.4,0.4);
+
+
+    //creeper.position.set(randN(20)+15,30,randN(20)+15);
+    creeper.position.set(10,40,-5);
+
+    scene.add(creeper);
+
+    creeper.addEventListener('collision',
+      function (other_object, relative_velocity, relative_rotation, contact_normal){
+        if (other_object == suzanne){
+            gameState.health -= 1;
+            creeper.position.set(randN(20)+15,30,randN(20)+15);
+            if (gameState.health == 0){
+              gameState.scene = 'youlose';
+            }
+
+            this.position.y = this.position.y - 100;
+            this.__dirtyPosition = true;
+        }
+      }
+    )
+  }
 
 	function addBalls(){
 		var numBalls = 20;
@@ -380,7 +418,18 @@
 		mesh.setDamping(0.1,0.1);
 		mesh.castShadow = true;
 		return mesh;
-}
+  }
+
+  function createCreeper() {
+    var geometry = new THREE.BoxGeometry(8,8,8);
+    var texture = new THREE.TextureLoader().load('creeper.jpg');
+    var material = new THREE.MeshLambertMaterial( {map: texture});
+    var pmaterial = new Physijs.createMaterial(material, 0.9, 0.5);
+    var mesh = new Physijs.BoxMesh(geometry, pmaterial);
+    mesh.setDamping(0.1,0.1);
+    mesh.castShadow = true;
+    return mesh;
+  }
 
 
 	// function createAvatar(){
@@ -529,6 +578,16 @@
 		var a = new THREE.Vector3(0,1,0);
 		a = gudetama.lookAt(suzanne.position).transform.position - gudetama.transform.position;
 		gudetama.rigidbody.AddForce(100 * a);
+
+	}
+
+  function updateCreeper(){
+		creeper.lookAt(suzanne.position);
+		creeper.__dirtyPosition = true;
+
+		var b = new THREE.Vector3(0,1,0);
+		b = creeper.lookAt(suzanne.position).transform.position - creeper.transform.position;
+		creeper.rigidbody.AddForce(100 * a);
 
 	}
 
