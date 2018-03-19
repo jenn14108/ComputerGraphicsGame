@@ -1,5 +1,5 @@
   var scene, renderer;  // all threejs programs need these
-	var camera, avatarCam, edgeCam;  // we have two cameras in the main scene
+	var camera, avatarCam, edgeCam, juliaCam;  // we have two cameras in the main scene
 	var avatar, suzanne , gudetama;
 	// here are some mesh objects ...
 
@@ -99,15 +99,15 @@
 
 			// create the avatar
 			avatarCam = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 1000 );
-			//avatar = createAvatar();
-			//avatar.translateY(20);
 			avatarCam.translateY(-4);
 			avatarCam.translateZ(3);
-			//scene.add(avatar);
 			gameState.camera = avatarCam;
 
       edgeCam = new THREE.PerspectiveCamera( 120, window.innerWidth / window.innerHeight, 0.1, 1000 );
       edgeCam.position.set(20,20,10);
+
+      juliaCam = new THREE.PerspectiveCamera( 100, window.innerWidth / window.innerHeight, 0.1, 1000 );
+      juliaCam.position.set(15,15,10);
 
 			addBalls();
 
@@ -482,6 +482,7 @@
 			case "1": gameState.camera = camera; break;
 			case "2": gameState.camera = avatarCam; break;
       case "3": gameState.camera = edgeCam; break;
+      case "4": gameState.camera = juliaCam; break;
 
 			// move the camera around, relative to the avatar
 			case "ArrowLeft": avatarCam.translateY(1);break;
@@ -492,8 +493,8 @@
 			case "e": avatarCam.translateX(1);break;
 
 			case "p": gameState.scene == 'main';
-			//stands for upright. This is for resetting the position of suzanne so she is upright 
-			//when she falls over and faces some weird position 
+			//stands for upright. This is for resetting the position of suzanne so she is upright
+			//when she falls over and faces some weird position
 			case "u": suzanne.rotation.set(0,0,0); suzanne.__dirtyRotation=true;
 				console.dir(suzanne.rotation); break;
 
@@ -586,6 +587,7 @@
 				updateAvatar();
 				updateNPC();
         edgeCam.lookAt(suzanne.position);
+        juliaCam.lookAt(suzanne.position);
 	    	scene.simulate();
 				if (gameState.camera!= 'none'){
 					renderer.render( scene, gameState.camera );
