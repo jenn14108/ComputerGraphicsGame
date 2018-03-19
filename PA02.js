@@ -4,7 +4,6 @@
 	// here are some mesh objects ...
 
 	var cone;
-	var npc;
 
 	var startScene, endScene, endCamera, endText, startText, startCamera, loseScene, loseCamera, loseText;
 
@@ -114,12 +113,6 @@
 			cone = createConeMesh(4,6);
 			cone.position.set(10,3,7);
 			scene.add(cone);
-
-			npc = createBoxMesh(0x0000ff);
-			npc.position.set(30,5,-30);
-			npc.scale.set(1,2,4);
-			scene.add(npc);
-			console.dir(npc);
 
       npc3 = createConeMesh(2,3);
       			npc3.position.set(20,0,20);
@@ -422,7 +415,7 @@
 
   function createCreeper() {
     var geometry = new THREE.BoxGeometry(8,8,8);
-    var texture = new THREE.TextureLoader().load('creeper.jpg');
+    var texture = new THREE.TextureLoader().load('../images/'+'creeper.jpg');
     var material = new THREE.MeshLambertMaterial( {map: texture});
     var pmaterial = new Physijs.createMaterial(material, 0.9, 0.5);
     var mesh = new Physijs.BoxMesh(geometry, pmaterial);
@@ -565,21 +558,15 @@
 		}
 	}
 
-	function updateNPC(){
-		npc.lookAt(suzanne.position);
-	  npc.__dirtyPosition = true;
-		npc.setLinearVelocity(npc.getWorldDirection().multiplyScalar(0.5));
-	}
 
-	function updateGudetama(){
-		gudetama.lookAt(suzanne.position);
-		gudetama.__dirtyPosition = true;
 
-		var a = new THREE.Vector3(0,1,0);
-		a = gudetama.lookAt(suzanne.position).transform.position - gudetama.transform.position;
-		gudetama.rigidbody.AddForce(100 * a);
-
-	}
+  function updateGudetama(){
+    gudetama.lookAt(suzanne.position);
+    if (gudetama.position.distanceTo(suzanne.position)<=20) {
+      gudetama.__dirtyPosition = true;
+      gudetama.setLinearVelocity(gudetama.getWorldDirection());
+    }
+ }
 
   function updateCreeper(){
 		creeper.lookAt(suzanne.position);
@@ -644,7 +631,7 @@
 
 			case "main":
 				updateAvatar();
-				updateNPC();
+        updateGudetama();
         edgeCam.lookAt(suzanne.position);
         juliaCam.lookAt(suzanne.position);
 	    	scene.simulate();
