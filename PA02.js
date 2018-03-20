@@ -1,6 +1,6 @@
   var scene, renderer;  // all threejs programs need these
 	var camera, avatarCam, edgeCam, juliaCam;  // we have two cameras in the main scene
-	var avatar, suzanne , gudetama, creeper;
+	var avatar, suzanne , gudetama, creeper,zantan;
 	// here are some mesh objects ...
 
 	var cone;
@@ -127,6 +127,7 @@
 
 			addGudetama();
       addCreeper();
+      addZantan();
 
 			initSuzanne();
 			initSuzanneOBJ();
@@ -238,6 +239,29 @@
             }
 
             this.position.y = this.position.y - 100;
+            this.__dirtyPosition = true;
+        }
+      }
+    )
+  }
+  function addZantan(){
+    zantan = createZantan();
+    zantan.scale.set(0.4,0.4,0.4);
+
+
+    //creeper.position.set(randN(20)+15,30,randN(20)+15);
+    zantan.position.set(30,40,5);
+
+    scene.add(zantan);
+
+    zantan.addEventListener('collision',
+      function (other_object, relative_velocity, relative_rotation, contact_normal){
+        if (other_object == suzanne){
+            gameState.health += 1;
+            zantan.position.set(randN(20)+15,30,randN(20)+15);
+    
+
+
             this.__dirtyPosition = true;
         }
       }
@@ -424,6 +448,16 @@
     return mesh;
   }
 
+  function createZantan() {
+    var geometry = new THREE.BoxGeometry(8,8,8);
+    var texture = new THREE.TextureLoader().load('../images/'+'red.jpg');
+    var material = new THREE.MeshLambertMaterial( {map: texture});
+    var pmaterial = new Physijs.createMaterial(material, 0.9, 0.5);
+    var mesh = new Physijs.BoxMesh(geometry, pmaterial);
+    mesh.setDamping(0.1,0.1);
+    mesh.castShadow = true;
+    return mesh;
+  }
 
 	// function createAvatar(){
 	// 	//var geometry = new THREE.SphereGeometry( 4, 20, 20);
@@ -577,6 +611,15 @@
 		creeper.rigidbody.AddForce(100 * a);
 
 	}
+  function updateZantan(){
+    zantan.lookAt(suzanne.position);
+    zantan.__dirtyPosition = true;
+
+    var c = new THREE.Vector3(0,1,0);
+    c = zantan.lookAt(suzanne.position).transform.position - zantan.transform.position;
+    zantan.rigidbody.AddForce(100 * a);
+
+  }
 
   function updateAvatar(){
 
