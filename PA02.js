@@ -210,6 +210,7 @@
 						gudetama.position.set(randN(20)+15,30,randN(20)+15);
 						if (gameState.health == 0){
 							gameState.scene = 'youlose';
+              gameState.health=10;
 						}
 
 						//this.position.y = this.position.y - 100;
@@ -259,7 +260,7 @@
         if (other_object == suzanne){
             gameState.health += 1;
             zantan.position.set(randN(20)+15,30,randN(20)+15);
-    
+
 
 
             this.__dirtyPosition = true;
@@ -670,6 +671,7 @@
 			case "youlose":
 				loseText.rotateY(0.005);
 				renderer.render(loseScene, loseCamera);
+        gameState.health = 10;
 				break;
 
 			case "main":
